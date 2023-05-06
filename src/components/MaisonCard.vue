@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { pb } from '@/backend'
-// Ajouter 'MaisonRecord, BaseSystemFields' semble eviter le bug
-import type { MaisonResponse, MaisonRecord, BaseSystemFields } from '@/pocketbase-types'
+// Ajouter 'MaisonRecord' semble eviter le bug
+import type { MaisonResponse, MaisonRecord } from '@/pocketbase-types'
 
 // bug MaisonResponse
 const props: MaisonResponse = defineProps<MaisonResponse>()
