@@ -6,7 +6,9 @@ Nécessite Vue 3.3 encore en bêta. Si erreur à l'installation des dépendances
 npm install --force
 ```
 
-# Travail
+# Travail TP2
+
+[Travail TP3](#Travail%20TP3) plus bas
 
 ## PocketBase
 
@@ -147,3 +149,11 @@ const maisonsDePlusde100M2 = maisonsListe.filter(
 [map]: https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/map
 [pb-file-url]: https://pocketbase.io/docs/files-handling/#file-url
 [bindClass]: https://vuejs.org/guide/essentials/class-and-style.html#binding-to-objects
+
+# Travail TP3
+
+Mise à jours du code pour Vue Router / Vite Plugin Pages
+
+- Quitter
+- Remplacer les fichiers
+-
