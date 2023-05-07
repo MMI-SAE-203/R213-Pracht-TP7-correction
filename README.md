@@ -70,6 +70,36 @@ Pour le code du template, vous pouvez utiliser un des plugins Figma suivants :
 
 Pour les `props` du composant `MaisonCard`, bien utiliser le type générer automatiquement de PocketBase : `MaisonRecord` à importer de `/src/pocketbase-types.ts`.
 
+Si cela ne fonctionne pas : demandez. Voiçi un code pour contourner un éventuel bug :
+
+```ts
+// Ajouter 'MaisonRecord' semble eviter le bug
+import type { MaisonResponse, MaisonRecord } from '@/pocketbase-types'
+
+// bug MaisonResponse
+const props: MaisonResponse = defineProps<MaisonResponse>()
+```
+
+Si cela ne fonctionne pas plus utiliser (`defineProps` sans `import type`):
+
+```ts
+const props = defineProps<{
+  nomMaison: string
+  prix: number
+  images: string[]
+  nbChambres: number
+  nbSdb: number
+  adresse: string
+  surface: number
+  favori: boolean
+  id: string
+  created: string
+  updated: string
+  collectionId: string
+  collectionName: string
+}>()
+```
+
 Rq. pour colorier le coeur si "favoris" : entourer le `<path>` du code suivant :
 
 ```html
@@ -106,10 +136,11 @@ Vous pouvez tester le code suivant ([PocketBase file url][pb-file-url]) :
   ```html
   <script setup lang="ts">
     import { pb } from '@/backend'
-    import type { MaisonRecord, MaisonResponse, BaseSystemFields } from '@/pocketbase-types'
+    // Ajouter 'MaisonRecord' semble eviter le bug
+    import type { MaisonResponse, MaisonRecord } from '@/pocketbase-types'
 
     // bug MaisonResponse
-    const props = defineProps<MaisonRecord & BaseSystemFields<null>>()
+    const props: MaisonResponse = defineProps<MaisonResponse>()
 
     const img0 = props.images?.[0]
     const urlImg0 = img0 ? pb.getFileUrl(props, img0, { thumb: '100x250' }) : '/image-not-found.png'
@@ -152,8 +183,13 @@ const maisonsDePlusde100M2 = maisonsListe.filter(
 
 # Travail TP3
 
-Mise à jours du code pour Vue Router / Vite Plugin Pages
+Mise à jour du code pour Vue Router / Vite Plugin Pages
 
-- Quitter
-- Remplacer les fichiers
--
+- Quitter le serveur de développent (Vite) si nécessaire.
+- Remplacer les fichiers par ceux fournis sur Moodle
+  - `/src/main.ts` : Initialise Vue Router avec les `pages` générer par le Plugin Vite Pages.
+  - `/env.d.ts` : Ajout TypeScript du Plugin Vite Pages
+  - `/package.json` : Ajout packets `"vue-router"` et `"vite-plugin-pages"`
+  - `/vite.config.ts` : Initialise le Plugin Pages dans
+    le serveur Vite
+  - `/README.md` : Les consignes qui sont mises à jour.
