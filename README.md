@@ -193,3 +193,93 @@ Mise à jour du code pour Vue Router / Vite Plugin Pages
   - `/vite.config.ts` : Initialise le Plugin Pages dans
     le serveur Vite
   - `/README.md` : Les consignes qui sont mises à jour.
+
+## La page d'accueil `/src/pages/index.vue`
+
+- Copier `/src/App.vue` en `/src/pages/index.vue` et ne gardez que le contenu affichant la liste des maisons.
+- Remplacer `/src/App.vue` par le code suivant :
+  ```html
+  <script setup lang="ts">
+    //
+  </script>
+  ```
+
+<template>
+  <header>
+    <h1 class="text-4xl">Test avec "router"</h1>
+  </header>
+
+  <main>
+    <!-- Suspense sera utile pour charger les données (await) -->
+    <Suspense>
+      <!-- Affiche la page -->
+      <RouterView />
+    </Suspense>
+  </main>
+</template>
+  ```
+Testez
+
+## Chargement des données
+
+Reprendre le `backend.ts` fait sous forme de fonstions.
+
+Dans `/src/pages/index.vue`, remplacez le tableau par l'appel de la fonction de `/src/backend.ts` chargeant toutes les "offrees" :
+
+```ts
+import { allMaisonsSorted } from '@/backend'
+
+const maisonsListe = await allMaisonsSorted()
+```
+
+A noter, faire un `await` dans `<script setup>` ne fonctionne que car l'on a mit <[RouterView]> dans un <[Suspense]>
+
+[RouterView]: https://router.vuejs.org/guide/#router-view
+[Suspense]: https://vuejs.org/guide/built-ins/suspense.html
+
+Testez en allant à l'URL : http://localhost:5173/offres
+
+**Important :** Apprenez à affichers les routes dans Vue DevTools (demandez).
+
+## Menu de navigation
+
+Pour les liens il est préferable d'utiliser le composant <[RouterLink]>
+
+[RouterLink]: https://router.vuejs.org/api/interfaces/RouterLinkProps.html
+
+Ajouter le menu dans `/src/App.vue` :
+
+```html
+<nav>
+  <ul>
+    <li>
+      <RouterLink to="/">Accueil</RouterLink>
+    </li>
+    <li>
+      <RouterLink to="/offres">Toutes les offres</RouterLink>
+    </li>
+  </ul>
+</nav>
+```
+
+## Intro au paramétres de "routes"
+
+Copier `/src/pages/offres/index.vue` en `/src/pages/offres/bySurface100.vue`.
+
+Et remplacer dedans `allMaisonsSorted()` par `bySurface(100)`. (Ne pas oublier l'import.)
+
+Ajouter un lien au menu pour la page.
+
+### Si vous avez le temps
+
+Renommer `bySurface100.vue` en `bySurface/[surface].vue`. C'est une [route dynamique][routesDynamiques].
+
+Et utiliser la `props` recue (`string`) dans l'appel de `bySurface` aprés l'avoir convertie en nombre (`number`).
+
+```ts
+const props = defineProps<{ surface: string }>()
+```
+
+Testez en allant (par exemple) à l'URL : http://localhost:5173/offres/bysurface/130
+
+[routesDynamiques]: https://github.com/hannoeru/vite-plugin-pages#dynamic-routes
