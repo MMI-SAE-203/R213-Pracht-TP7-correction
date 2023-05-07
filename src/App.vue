@@ -16,6 +16,11 @@
         <li>
           <RouterLink to="/offres/bysurface100">Maison de plus de 100m2</RouterLink>
         </li>
+        <li>
+          <RouterLink to="/offres/bysurface/130"
+            >Maison de plus de 130m2 (route dynamique)</RouterLink
+          >
+        </li>
       </ul>
     </nav>
   </header>
