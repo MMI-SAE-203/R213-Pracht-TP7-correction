@@ -8,6 +8,8 @@ import MaisonCard from './components/MaisonCard.vue'
   </header>
 
   <main>
-    <RouterView />
+    <Suspense>
+      <RouterView />
+    </Suspense>
   </main>
 </template>
