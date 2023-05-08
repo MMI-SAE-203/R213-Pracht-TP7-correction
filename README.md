@@ -66,21 +66,19 @@ Prendre modèle sur le CM/TD [`PersonneCard.vue`](https://github.com/ppierre/vue
 Pour le code du template, vous pouvez utiliser un des plugins Figma suivants :
 
 - [Inspect - Export to HTML, React, Tailwin](https://www.figma.com/community/plugin/1049994768493726219) : donne un code HTML/Tailwind à coller dans `<template>`. Juste remplacer les textes par les interpolations (eg. `{{ maProp }}`)
-- [AutoHTML](https://www.figma.com/community/plugin/1077172952654000760) : Fais un composant (choisir Vue et Taillwind en option). Mais pas en TypeScript, ni avec les types de PocketBase.
+- [AutoHTML](https://www.figma.com/community/plugin/1077172952654000760) : Fait un composant (choisir Vue et Taillwind en option). Mais pas en TypeScript, ni avec les types de PocketBase.
 
 Pour les `props` du composant `MaisonCard`, bien utiliser le type générer automatiquement de PocketBase : `MaisonRecord` à importer de `/src/pocketbase-types.ts`.
 
-Si cela ne fonctionne pas : demandez. Voiçi un code pour contourner un éventuel bug :
+Le code suivant doit fonctionner (s'assurer d'avoir au minimum `"vue": "^3.3.0-beta.5",` dans le `package.json`) :
 
 ```ts
-// Ajouter 'MaisonRecord' semble eviter le bug
-import type { MaisonResponse, MaisonRecord } from '@/pocketbase-types'
+import type { MaisonResponse } from '@/pocketbase-types'
 
-// bug MaisonResponse
 const props: MaisonResponse = defineProps<MaisonResponse>()
 ```
 
-Si cela ne fonctionne pas plus utiliser (`defineProps` sans `import type`):
+Avant Vue 3.3 il fallait recopier le type :
 
 ```ts
 const props = defineProps<{
@@ -136,8 +134,7 @@ Vous pouvez tester le code suivant ([PocketBase file url][pb-file-url]) :
   ```html
   <script setup lang="ts">
     import { pb } from '@/backend'
-    // Ajouter 'MaisonRecord' semble eviter le bug
-    import type { MaisonResponse, MaisonRecord } from '@/pocketbase-types'
+    import type { MaisonResponse } from '@/pocketbase-types'
 
     // bug MaisonResponse
     const props: MaisonResponse = defineProps<MaisonResponse>()
@@ -190,6 +187,7 @@ Mise à jour du code pour Vue Router / Vite Plugin Pages
   - `/src/main.ts` : Initialise Vue Router avec les `pages` générer par le Plugin Vite Pages.
   - `/env.d.ts` : Ajout TypeScript du Plugin Vite Pages
   - `/package.json` : Ajout packets `"vue-router"` et `"vite-plugin-pages"`
+    - refaire dans le terminal : `npm i -f`
   - `/vite.config.ts` : Initialise le Plugin Pages dans
     le serveur Vite
   - `/README.md` : Les consignes qui sont mises à jour.
