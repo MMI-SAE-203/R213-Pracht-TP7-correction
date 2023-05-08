@@ -224,12 +224,19 @@ Testez
 
 Reprendre le `backend.ts` fait sous forme de fonstions.
 
-Dans `/src/pages/index.vue`, remplacez le tableau par l'appel de la fonction de `/src/backend.ts` chargeant toutes les "offrees" :
+Dans `/src/pages/index.vue`, remplacez le tableau par l'appel de la fonction de `/src/backend.ts` chargeant toutes les "offres" :
 
 ```ts
 import { allMaisonsSorted } from '@/backend'
 
 const maisonsListe = await allMaisonsSorted()
+```
+
+Et remplacer `v-bind="uneMaison"` par `v-bind="{ ...uneMaison }"` dans le template :
+
+```html
+<!-- clone de uneMaison par { ...spread syntax } car sinon bug -->
+<MaisonCard v-for="uneMaison of maisonsListe" :v-key="uneMaison.id" v-bind="{ ...uneMaison }" />
 ```
 
 A noter, faire un `await` dans `<script setup>` ne fonctionne que car l'on a mit <[RouterView]> dans un <[Suspense]>
