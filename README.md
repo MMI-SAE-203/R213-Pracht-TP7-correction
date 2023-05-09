@@ -139,9 +139,9 @@ Vous pouvez tester le code suivant ([PocketBase file url][pb-file-url]) :
     // bug MaisonResponse
     const props: MaisonResponse = defineProps<MaisonResponse>()
 
-    const img0 = props.images?.[0]
-    const urlImg0 = img0 ? pb.getFileUrl(props, img0, { thumb: '100x250' }) : '/image-not-found.png'
-    console.log(urlImg0)
+    const img0 = props.images[0]
+    // si pas d'image (undefined) garde undefined
+    const urlImg0 = img0 && pb.getFileUrl(props, img0, { thumb:
   </script>
   ```
 
