@@ -1,33 +1,13 @@
 <script setup lang="ts">
 import { pb } from '@/backend'
-// Ajouter 'MaisonRecord' semble eviter le bug
-import type { MaisonResponse, MaisonRecord } from '@/pocketbase-types'
+import type { MaisonResponse } from '@/pocketbase-types'
 
 // bug MaisonResponse
 const props: MaisonResponse = defineProps<MaisonResponse>()
-// Ou si bug
-// const props: MaisonRecord & BaseSystemFields = defineProps<MaisonRecord & BaseSystemFields>()
 
-/* Si bug, utilisez : */
-// const props = defineProps<{
-//   nomMaison?: string
-//   prix?: number
-//   images?: string[]
-//   nbChambres?: number
-//   nbSdb?: number
-//   adresse?: string
-//   surface?: number
-//   favori?: boolean
-//   id: string
-//   created: string
-//   updated: string
-//   collectionId: string
-//   collectionName: string
-// }>()
-
-const img0 = props.images?.[0]
-const urlImg0 = img0 ? pb.getFileUrl(props, img0, { thumb: '100x250' }) : '/image-not-found.png'
-console.log(urlImg0)
+const img0 = props.images[0]
+// si pas d'image (undefined) garde undefined
+const urlImg0 = img0 && pb.getFileUrl(props, img0, { thumb: '100x250' })
 </script>
 
 <template>
