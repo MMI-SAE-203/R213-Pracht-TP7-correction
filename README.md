@@ -196,27 +196,28 @@ Mise à jour du code pour Vue Router / Vite Plugin Pages
 
 - Copier `/src/App.vue` en `/src/pages/index.vue` et ne gardez que le contenu affichant la liste des maisons.
 - Remplacer `/src/App.vue` par le code suivant :
+
   ```html
   <script setup lang="ts">
     //
   </script>
+
+  <template>
+    <header>
+      <h1 class="text-4xl">Test avec "router"</h1>
+    </header>
+
+    <main>
+      <!-- Suspense sera utile pour charger les données (await) -->
+      <Suspense>
+        <!-- Affiche la page -->
+        <RouterView />
+      </Suspense>
+    </main>
+  </template>
   ```
 
-<template>
-  <header>
-    <h1 class="text-4xl">Test avec "router"</h1>
-  </header>
-
-  <main>
-    <!-- Suspense sera utile pour charger les données (await) -->
-    <Suspense>
-      <!-- Affiche la page -->
-      <RouterView />
-    </Suspense>
-  </main>
-</template>
-  ```
-Testez
+  Testez
 
 ## Chargement des données
 
