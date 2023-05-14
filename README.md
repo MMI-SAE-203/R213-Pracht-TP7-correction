@@ -98,7 +98,7 @@ const props = defineProps<{
 }>()
 ```
 
-Rq. pour colorier le coeur si "favoris" : entourer le `<path>` du code suivant :
+Rq. pour colorier le cœur si "favoris" : entourer le `<path>` du code suivant :
 
 ```html
 <g :class="{ 'fill-red-400': favori }">
@@ -128,7 +128,7 @@ Afficher toutes les maisons avec un `v-for`comme [vu en CM/TD][CM-boucle-objet]
 
 Vous pouvez tester le code suivant ([PocketBase file url][pb-file-url]) :
 
-- Remomer `backend.mjs` en `backend.ts` et exporter `pb`
+- Renommer `backend.mjs` en `backend.ts` et exporter `pb`
 - Le fichier `/src/components/MaisonCard.vue`
 
   ```html
@@ -221,14 +221,16 @@ Mise à jour du code pour Vue Router / Vite Plugin Pages
 
 ## Chargement des données
 
-Reprendre le `backend.ts` fait sous forme de fonstions.
+### page d'accueil : les offres en favori
 
-Dans `/src/pages/index.vue`, remplacez le tableau par l'appel de la fonction de `/src/backend.ts` chargeant toutes les "offres" :
+Reprendre le `backend.ts` fait sous forme de fonctions.
+
+Dans `/src/pages/index.vue`, remplacez le tableau par l'appel de la fonction de `/src/backend.ts` chargeant toutes les "offres" en favori :
 
 ```ts
 import { allMaisonsSorted } from '@/backend'
 
-const maisonsListe = await allMaisonsSorted()
+const maisonsListe = await allMaisonsFavori()
 ```
 
 Et remplacer `v-bind="uneMaison"` par `v-bind="{ ...uneMaison }"` dans le template :
@@ -238,18 +240,27 @@ Et remplacer `v-bind="uneMaison"` par `v-bind="{ ...uneMaison }"` dans le templa
 <MaisonCard v-for="uneMaison of maisonsListe" :v-key="uneMaison.id" v-bind="{ ...uneMaison }" />
 ```
 
-A noter, faire un `await` dans `<script setup>` ne fonctionne que car l'on a mit <[RouterView]> dans un <[Suspense]>
+À noter, faire un `await` dans `<script setup>` ne fonctionne que car l'on a mis <[RouterView]> dans un <[Suspense]>
 
 [RouterView]: https://router.vuejs.org/guide/#router-view
 [Suspense]: https://vuejs.org/guide/built-ins/suspense.html
 
+Testez en allant à l'URL : http://localhost:5173/
+
+### pages "offres", toutes les offres
+
+Faire le fichier `/src/pages/offres/index.vue`
+
+- Même code que `/src/pages/index.vue`
+- Remplacer `allMaisonsFavori` par `allMaisonsSorted`
+
 Testez en allant à l'URL : http://localhost:5173/offres
 
-**Important :** Apprenez à affichers les routes dans Vue DevTools (demandez).
+**Important :** Apprenez à afficher les routes dans Vue DevTools (demandez).
 
 ## Menu de navigation
 
-Pour les liens il est préferable d'utiliser le composant <[RouterLink]>
+Pour les liens il est préférable d'utiliser le composant <[RouterLink]>
 
 [RouterLink]: https://router.vuejs.org/api/interfaces/RouterLinkProps.html
 
@@ -268,7 +279,9 @@ Ajouter le menu dans `/src/App.vue` :
 </nav>
 ```
 
-## Intro au paramétres de "routes"
+Passez à Travail TP4. Si pas fini TP3 dans les temps.
+
+## Intro aux paramètres de "routes"
 
 Copier `/src/pages/offres/index.vue` en `/src/pages/offres/bySurface100.vue`.
 
@@ -280,7 +293,7 @@ Ajouter un lien au menu pour la page.
 
 Renommer `bySurface100.vue` en `bySurface/[surface].vue`. C'est une [route dynamique][routesDynamiques].
 
-Et utiliser la `props` recue (`string`) dans l'appel de `bySurface` aprés l'avoir convertie en nombre (`number`).
+Et utiliser la `props` recue (`string`) dans l'appel de `bySurface` après l'avoir convertie en nombre (`number`).
 
 ```ts
 const props = defineProps<{ surface: string }>()
@@ -289,3 +302,56 @@ const props = defineProps<{ surface: string }>()
 Testez en allant (par exemple) à l'URL : http://localhost:5173/offres/bysurface/130
 
 [routesDynamiques]: https://github.com/hannoeru/vite-plugin-pages#dynamic-routes
+
+# Travail TP4
+
+## Changer `/offres` en une liste de liens
+
+```html
+<ul>
+  <li v-for="uneMaison of maisonsListe" :v-key="uneMaison.id" v-bind="{ ...uneMaison }">
+    <RouterLink
+      :to="{
+        name: 'offres-id',
+        params: {
+          id: uneMaison.id
+        }
+      }"
+      class="text-red-400 hover:text-red-600"
+    >
+      {{ uneMaison.nomMaison }}
+    </RouterLink>
+  </li>
+</ul>
+```
+
+On remarquera l'usage d'un binding (`:`) pour la props `to` pour pouvoir passer un objet :
+
+- `name` : le nom de la route (ne change pas avec les paramètres)
+- `params` : un objet contenant les paramètres (`props`) passés au composant affiché par la route (de `/src/pages/...` dans `<RouterView>`)
+
+## afficher une offre :
+
+`/src/pages/offres/[id].vue`
+
+```html
+<script setup lang="ts">
+  import MaisonCard from '@/components/MaisonCard.vue'
+
+  const props = defineProps<{
+    id: string
+  }>()
+  const uneMaison = await /* Avez-vous une fonction pour cela ? */
+</script>
+<template>
+  <div>
+    <h1 class="text-xl">Une maison</h1>
+    <MaisonCard v-bind="{ ...uneMaison }" />
+  </div>
+</template>
+```
+
+# Travail TP5
+
+- `/src/pages/agents/index.vue` : la liste des agents avec des liens vers...
+- `/src/pages/agents/[id].vue` : la page d'un agent qui liste les offres dont il est responsable.
