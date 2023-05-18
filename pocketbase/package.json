@@ -1,0 +1,18 @@
+{
+  "module": "es2022",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "run": "node testbackend.js",
+    "format": "prettier --write .",
+    "typegen": "pocketbase-typegen --db ./pb_data/data.db --out ./pocketbase-types.ts"
+  },
+  "dependencies": {
+    "pocketbase": "^0.14.4"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.8",
+    "typescript": "^5.0.4",
+    "pocketbase-typegen": "^1.1.9"
+  }
+}

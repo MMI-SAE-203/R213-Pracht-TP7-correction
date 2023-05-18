@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { pb } from '@/backend'
-import type { MaisonResponse } from '@/pocketbase-types'
+import { pb } from '@backend'
+import type { MaisonResponse } from '@types'
 
 // bug MaisonResponse
 const props: MaisonResponse = defineProps<MaisonResponse>()

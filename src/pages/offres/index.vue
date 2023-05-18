@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import MaisonCard from '@/components/MaisonCard.vue'
-import { allMaisonsSorted } from '@/backend'
+import { allMaisonsSorted } from '@backend'
 
 const maisonsListe = await allMaisonsSorted()
 console.log(maisonsListe)

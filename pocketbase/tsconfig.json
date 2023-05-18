@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "nodenext",
+    "module": "ES2022",
+    "target": "ES2022",
+    "sourceMap": true
+  },
+  "include": ["testbackend.ts"]
+}

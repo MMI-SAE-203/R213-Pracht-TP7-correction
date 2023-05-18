@@ -4,7 +4,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@backend": ["./pocketbase/backend.ts"],
+      "@types": ["./pocketbase/pocketbase-types.ts"]
     }
   },
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { oneID } from '@/backend'
+import { oneID } from '@backend'
 import MaisonCard from '@/components/MaisonCard.vue'
 
 const props = defineProps<{

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import MaisonCard from '@/components/MaisonCard.vue'
-import { allMaisonsFavori } from '@/backend'
+import { allMaisonFavori } from '@backend'
 
-const maisonsListe = await allMaisonsFavori()
+const maisonsListe = await allMaisonFavori()
 console.log(maisonsListe)
 </script>
 

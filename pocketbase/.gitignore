@@ -1,0 +1,13 @@
+node_modules
+/pocketbase
+/pocketbase.exe
+/backend.js
+/backend.js.map
+/testbackend.js
+/testbackend.js.map
+/pocketbase-types.js
+/pocketbase-types.js.map
+/pd_data/*
+.DS_Store
+LICENSE.md
+CHANGELOG.md

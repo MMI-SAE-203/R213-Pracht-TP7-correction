@@ -10,7 +10,9 @@ export default defineConfig({
   plugins: [vue(), Pages()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@backend': './pocketbase/backend.ts',
+      '@types': './pocketbase/pocketbase-types.ts'
     }
   }
 })
