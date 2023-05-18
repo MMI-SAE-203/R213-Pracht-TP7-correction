@@ -21,6 +21,9 @@
             >Maison de plus de 130m2 (route dynamique)</RouterLink
           >
         </li>
+        <li>
+          <RouterLink to="/agents">Tous les agents</RouterLink>
+        </li>
       </ul>
     </nav>
   </header>

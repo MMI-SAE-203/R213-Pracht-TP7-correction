@@ -49,7 +49,12 @@ export async function oneIDagent(id) {
   return await pb.collection(Collections.Agent).getOne<AgentResponse>(id)
 }
 
-//
+//fonction pour retourner tous les agents
+export async function allAgents() {
+  return await pb.collection(Collections.Agent).getFullList<AgentResponse>({
+    sort: 'nomAgent'
+  })
+}
 
 export async function allMaisonsAgents() {
   return await pb
