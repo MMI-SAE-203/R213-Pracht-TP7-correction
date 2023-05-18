@@ -1,3 +1,7 @@
+Attention cette correction utilise des alias @backend et @type dans `/vite.config.ts` et `/tsconfig.json`
+
+Si vous avez les fichiers `/src/backend.ts` et `/src/pocketbase-types` les utiliser à la place des alias.
+
 # Composant avec paramètre
 
 Nécessite Vue 3.3 encore en bêta. Si erreur à l'installation des dépendances, faire :
