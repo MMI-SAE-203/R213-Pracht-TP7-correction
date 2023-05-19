@@ -313,7 +313,7 @@ Testez en allant (par exemple) à l'URL : http://localhost:5173/offres/bysurface
 
 ```html
 <ul>
-  <li v-for="uneMaison of maisonsListe" :v-key="uneMaison.id" v-bind="{ ...uneMaison }">
+  <li v-for="uneMaison of maisonsListe" :v-key="uneMaison.id">
     <RouterLink
       :to="{
         name: 'offres-id',

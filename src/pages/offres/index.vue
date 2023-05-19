@@ -10,7 +10,7 @@ console.log(maisonsListe)
   <div>
     <h1 class="pb-8 text-xl">Toutes les offres</h1>
     <ul>
-      <li v-for="uneMaison of maisonsListe" :v-key="uneMaison.id" v-bind="{ ...uneMaison }">
+      <li v-for="uneMaison of maisonsListe" :v-key="uneMaison.id">
         <RouterLink
           :to="{
             name: 'offres-id',
