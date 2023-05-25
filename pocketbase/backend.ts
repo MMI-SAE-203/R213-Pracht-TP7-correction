@@ -14,8 +14,31 @@ export async function oneID(id) {
   return await pb.collection(Collections.Maison).getOne<MaisonResponse>(id)
 }
 
-export async function ajoutMaison(maison: MaisonResponse) {
-  return await pb.collection(Collections.Maison).create<MaisonResponse>(maison)
+/* "Patch" images car pas `string[]` mais `{ file: File; name: string }[]`
+  à retirer si pas d'images à envoyer */
+export type MaisonResponseWithFiles = {
+  images?: {
+    file: File
+    name: string
+  }[]
+} & MaisonResponse
+
+export async function ajoutMaison(nvlMaison: MaisonResponseWithFiles) {
+  // Si pas d'images, simplement créer la maison
+  // return await pb.collection(Collections.Maison).create<MaisonResponse>(nvlMaison)
+
+  // Sinon : https://formkit.com/inputs/file#uploading-files
+  const formData = new FormData()
+  Object.entries(nvlMaison).forEach(([key, value]) => {
+    if (key !== 'images') {
+      formData.append(key, value as string)
+    }
+  })
+  nvlMaison.images?.forEach((image) => {
+    formData.append('images', image.file)
+  })
+  // passez directement `nvlMaison` si vous n'avez pas de fichiers
+  return await pb.collection(Collections.Maison).create<MaisonResponse>(formData)
 }
 
 // 7) les maisons par ordre croissant de leur date de creation dans la base de donnees

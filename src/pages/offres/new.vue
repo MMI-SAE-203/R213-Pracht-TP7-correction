@@ -2,9 +2,9 @@
 import type { MaisonRecord, MaisonResponse } from '@types'
 import { ref } from 'vue'
 import type { FormKitSchemaFormKit, FormKitNode } from '@formkit/core'
-import { ajoutMaison } from "@backend";
-import { useRouter } from 'vue-router';
-import { ClientResponseError } from "pocketbase";
+import { ajoutMaison, type MaisonResponseWithFiles } from '@backend'
+import { useRouter } from 'vue-router'
+import { ClientResponseError } from 'pocketbase'
 
 const router = useRouter()
 
@@ -39,21 +39,29 @@ const schema: FormKitS<MaisonRecord>[] = [
   {
     name: 'nbChambres',
     $formkit: 'number',
-    label: 'Nombre de chambres',
+    label: 'Nombre de chambres'
   },
   {
     name: 'nbSdb',
     $formkit: 'number',
-    label: 'Nombre de salles de bain',
+    label: 'Nombre de salles de bain'
   },
   {
-    name:'favori',
+    name: 'favori',
     $formkit: 'checkbox',
     label: 'Favori'
+  },
+  {
+    $formkit: 'file',
+    name: 'images',
+    label: 'Images',
+    accept: '.png,.jpg,.jpeg,.bmp,.gif,.tiff',
+    multiple: 'true'
   }
 ]
 
-async function submitForm(data: MaisonResponse, node?: FormKitNode<MaisonResponse>) {
+// Simplement utiliser MaisonResponse si pas de fichiers
+async function submitForm(data: MaisonResponseWithFiles, node?: FormKitNode) {
   try {
     const record = await ajoutMaison(data)
     node?.setErrors([])
@@ -63,7 +71,7 @@ async function submitForm(data: MaisonResponse, node?: FormKitNode<MaisonRespons
       node?.setErrors([error.message])
     }
     console.error(error)
-  } 
+  }
 }
 </script>
 <template>
@@ -79,5 +87,5 @@ async function submitForm(data: MaisonResponse, node?: FormKitNode<MaisonRespons
   > 
   <!-- Les champs son défini dans le schéma et typés par TypeScript -->
     <FormKitSchema :schema="schema" />
-</FormKit>
+  </FormKit>
 </template>
