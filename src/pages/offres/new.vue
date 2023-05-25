@@ -2,7 +2,7 @@
 import type { MaisonRecord, MaisonResponse } from '@types'
 import { ref } from 'vue'
 import type { FormKitSchemaFormKit, FormKitNode } from '@formkit/core'
-import { ajoutMaison, type MaisonResponseWithFiles } from '@backend'
+import { ajoutMaison } from '@backend'
 import { useRouter } from 'vue-router'
 import { ClientResponseError } from 'pocketbase'
 
@@ -60,8 +60,7 @@ const schema: FormKitS<MaisonRecord>[] = [
   }
 ]
 
-// Simplement utiliser MaisonResponse si pas de fichiers
-async function submitForm(data: MaisonResponseWithFiles, node?: FormKitNode) {
+async function submitForm(data: MaisonResponse, node?: FormKitNode) {
   try {
     const record = await ajoutMaison(data)
     node?.setErrors([])

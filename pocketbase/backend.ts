@@ -1,4 +1,4 @@
-import PocketBase from 'pocketbase'
+import PocketBase, { BeforeSendResult } from 'pocketbase'
 import { AgentResponse, Collections, type MaisonResponse } from './pocketbase-types.js'
 export const pb = new PocketBase('http://127.0.0.1:8090')
 
@@ -14,31 +14,27 @@ export async function oneID(id) {
   return await pb.collection(Collections.Maison).getOne<MaisonResponse>(id)
 }
 
-/* "Patch" images car pas `string[]` mais `{ file: File; name: string }[]`
-  à retirer si pas d'images à envoyer */
-export type MaisonResponseWithFiles = {
-  images?: {
-    file: File
-    name: string
-  }[]
-} & MaisonResponse
+export async function ajoutMaison(nvlMaison: MaisonResponse) {
+  return await pb.collection(Collections.Maison).create<MaisonResponse>(processFiles(nvlMaison))
+}
 
-export async function ajoutMaison(nvlMaison: MaisonResponseWithFiles) {
-  // Si pas d'images, simplement créer la maison
-  // return await pb.collection(Collections.Maison).create<MaisonResponse>(nvlMaison)
-
-  // Sinon : https://formkit.com/inputs/file#uploading-files
+/**
+ * process form data to append files
+ * @param data form data to process
+ * @returns FormData object with files
+ */
+function processFiles(data:Object) {
   const formData = new FormData()
-  Object.entries(nvlMaison).forEach(([key, value]) => {
-    if (key !== 'images') {
+  Object.entries(data).forEach(([key, value]) => {
+    if (value?.[0].file instanceof File) {
+      value.forEach((file) => {
+        formData.append(key, file.file)
+      })  
+    } else {
       formData.append(key, value as string)
     }
   })
-  nvlMaison.images?.forEach((image) => {
-    formData.append('images', image.file)
-  })
-  // passez directement `nvlMaison` si vous n'avez pas de fichiers
-  return await pb.collection(Collections.Maison).create<MaisonResponse>(formData)
+  return formData
 }
 
 // 7) les maisons par ordre croissant de leur date de creation dans la base de donnees
