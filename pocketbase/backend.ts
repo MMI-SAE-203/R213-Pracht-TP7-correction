@@ -26,7 +26,7 @@ export async function ajoutMaison(nvlMaison: MaisonResponse) {
 function processFiles(data:Object) {
   const formData = new FormData()
   Object.entries(data).forEach(([key, value]) => {
-    if (value?.[0].file instanceof File) {
+    if (value?.[0]?.file instanceof File) {
       value.forEach((file) => {
         formData.append(key, file.file)
       })  
