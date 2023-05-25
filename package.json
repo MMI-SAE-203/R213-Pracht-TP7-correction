@@ -13,6 +13,7 @@
     "typegen": "pocketbase-typegen --db ./pocketbase/pb_data/data.db --out ./pocketbase/pocketbase-types.ts"
   },
   "dependencies": {
+    "@formkit/themes": "^0.17.2",
     "@formkit/vue": "^0.17.2",
     "pocketbase": "^0.14.3",
     "vue": "^3.3.0-beta.5",
