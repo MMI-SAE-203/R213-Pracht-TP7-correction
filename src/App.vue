@@ -14,6 +14,9 @@
           <RouterLink to="/offres">Toutes les offres</RouterLink>
         </li>
         <li>
+          <RouterLink to="/offres/new">Ajouter une offre</RouterLink>
+        </li>
+        <li>
           <RouterLink to="/offres/bysurface100">Maison de plus de 100m2</RouterLink>
         </li>
         <li>

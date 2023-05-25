@@ -14,6 +14,10 @@ export async function oneID(id) {
   return await pb.collection(Collections.Maison).getOne<MaisonResponse>(id)
 }
 
+export async function ajoutMaison(maison: MaisonResponse) {
+  return await pb.collection(Collections.Maison).create<MaisonResponse>(maison)
+}
+
 // 7) les maisons par ordre croissant de leur date de creation dans la base de donnees
 
 export async function allMaisonsSorted() {
